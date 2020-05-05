@@ -1,10 +1,9 @@
-package com.dualchat.dualchat;
+package com.dualchat.dualchat.security;
 
-import com.dualchat.dualchat.auth.JwtTokenFilter;
+import com.dualchat.dualchat.security.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -28,23 +27,25 @@ public class WebSecurityConfigurations extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    public void configurePasswordEncoder(AuthenticationManagerBuilder builder) throws Exception{
-            builder.userDetailsService(userDetailsService).passwordEncoder(getBCryptPasswordEncoder());
+    public void configurePasswordEncoder(AuthenticationManagerBuilder builder) throws Exception {
+        builder.userDetailsService(userDetailsService).passwordEncoder(getBCryptPasswordEncoder());
     }
+
     @Bean
-    AuthenticationManager geAuthenticationManager() throws Exception{
+    AuthenticationManager geAuthenticationManager() throws Exception {
         return super.authenticationManagerBean();
     }
+
     @Bean
-    BCryptPasswordEncoder getBCryptPasswordEncoder(){
-       return new BCryptPasswordEncoder();
+    BCryptPasswordEncoder getBCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup","/login").permitAll().anyRequest()
+                .antMatchers("/signup", "/login").permitAll().anyRequest()
                 .authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

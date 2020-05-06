@@ -1,7 +1,7 @@
 package com.dualchat.dualchat.service;
 
-import com.dualchat.dualchat.auth.TokenManager;
-import com.dualchat.dualchat.auth.UserDetailsService;
+import com.dualchat.dualchat.security.TokenManager;
+import com.dualchat.dualchat.security.UserDetailsService;
 import com.dualchat.dualchat.domain.User;
 import com.dualchat.dualchat.dtos.UserDto;
 import com.dualchat.dualchat.repository.UserRepository;
@@ -13,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -27,6 +30,8 @@ public class AuthServiceImpl implements AuthService {
     private UserDetailsService userDetailsService;
     @Autowired
     private TokenManager tokenManager;
+
+
     @Override
     public User signUp(UserDto user) {
         User nUser = new User();
@@ -36,12 +41,15 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String authenticate(UserDto userDto) throws Exception {
+    public Map authenticate(UserDto userDto) throws Exception {
         authenticate(userDto.getUsername(), userDto.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
-
-        return tokenManager.generateToken(userDto.getUsername());
+        User user = user = userRepository.findByUsername(userDto.getUsername());
+        Map<String,Object> authenticateMap = new HashMap<>();
+        authenticateMap.put("Token",tokenManager.generateToken(userDto.getUsername()));
+        authenticateMap.put("User",user);
+        return authenticateMap;
     }
     private void authenticate(String username, String password) throws Exception {
         try {

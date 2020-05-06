@@ -1,4 +1,4 @@
-package com.dualchat.dualchat.auth;
+package com.dualchat.dualchat.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,7 +15,7 @@ public class TokenManager {
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generateToken(String username) {
-        return Jwts.builder()
+        return "Bearer " + Jwts.builder()
                 .setSubject(username)
                 .signWith(key)
                 .setExpiration(new Date(System.currentTimeMillis() + validity))
@@ -26,13 +26,13 @@ public class TokenManager {
         return getUsernameToken(token) != null && isExpired(token);
     }
 
-    public String getUsernameToken(String token){
+    public String getUsernameToken(String token) {
         Claims claims = getClaims(token);
         return claims.getSubject();
     }
 
-    public boolean isExpired(String token){
-        Claims claims =     getClaims(token);
+    public boolean isExpired(String token) {
+        Claims claims = getClaims(token);
         return claims.getExpiration().after(new Date(System.currentTimeMillis()));
     }
 

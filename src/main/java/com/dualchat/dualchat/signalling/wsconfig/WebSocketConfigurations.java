@@ -1,9 +1,10 @@
 package com.dualchat.dualchat.signalling.wsconfig;
 
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
+import org.springframework.web.socket.config.annotation.*;
+
 
 @Configuration
 @EnableWebSocket
@@ -13,4 +14,5 @@ public class WebSocketConfigurations  implements WebSocketConfigurer {
             webSocketHandlerRegistry.addHandler(new SocketHandler(),"/socket")
                     .setAllowedOrigins("*");
     }
+
 }

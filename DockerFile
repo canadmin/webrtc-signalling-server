@@ -1,0 +1,5 @@
+FROM openjdk:8
+EXPOSE 8080
+ADD target/dual-chat.jar dual-chat.jar
+ENTRYPOINT ["java","-jar","/dual-chat.jar"]
+

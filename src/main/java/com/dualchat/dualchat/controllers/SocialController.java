@@ -31,4 +31,11 @@ public class SocialController {
         socialService.sendFriendRequest(senderId,receiverId);
         return  ResponseEntity.ok("istek gonderildi");
     }
+
+    @CrossOrigin
+    @PostMapping(path = "/acceptRequest")
+    public ResponseEntity<UserDto> acceptRequest(@RequestParam(value = "myId", required = true) String myId,
+                                                 @RequestParam(value = "senderId", required = true) String senderId){
+        return new ResponseEntity<>(socialService.acceptFriendRequest(myId,senderId),HttpStatus.OK);
+    }
 }

@@ -28,12 +28,12 @@ public class User {
     },orphanRemoval = true)
 
     @JoinColumn(name = "friends_user_id")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Friend> friends = new ArrayList<>();
 
     @OneToMany(cascade = {
             CascadeType.ALL
     })
-    @JsonManagedReference
+    @JsonIgnore
     private List<Request> requests = new ArrayList<>();
 }

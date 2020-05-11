@@ -1,5 +1,6 @@
 package com.dualchat.dualchat.service.social;
 
+import com.dualchat.dualchat.domain.Friend;
 import com.dualchat.dualchat.domain.Request;
 import com.dualchat.dualchat.domain.User;
 import com.dualchat.dualchat.dtos.UserDto;
@@ -47,8 +48,22 @@ public class SocialServiceImpl implements SocialService {
     }
 
     @Override
-    public void acceptFriendRequest(String myId, String senderId) {
+    public UserDto acceptFriendRequest(String myId, String senderId) {
+        Optional<User> answeringUser = userRepository.findById(myId);
+        Optional<User> waitingUser = userRepository.findById(senderId);
 
+        List<Friend> answeringFriends = answeringUser.get().getFriends();
+        List<Friend> waitingUserFriends = waitingUser.get().getFriends();
 
+        answeringFriends.add(Friend.builder().username(waitingUser.get().getUsername()).user(answeringUser.get()).build());
+        waitingUserFriends.add(Friend.builder().username(answeringUser.get().getUsername()).user(answeringUser.get()).build());
+
+        answeringUser.get().setFriends(answeringFriends);
+        waitingUser.get().setFriends(waitingUserFriends);
+
+        userRepository.save(answeringUser.get());
+        userRepository.save(waitingUser.get());
+
+        return modelMapper.map(answeringUser.get(),UserDto.class);
     }
 }

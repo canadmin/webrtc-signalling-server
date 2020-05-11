@@ -13,7 +13,7 @@ public interface SocialService {
 
     List<UserDto> showFriendRequest(String userId);
 
-    void acceptFriendRequest(String myId,String senderId);
+    UserDto acceptFriendRequest(String myId,String senderId);
 
 
 

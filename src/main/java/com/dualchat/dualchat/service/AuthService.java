@@ -1,14 +1,13 @@
 package com.dualchat.dualchat.service;
 
 import com.dualchat.dualchat.domain.User;
-import com.dualchat.dualchat.dtos.UserDto;
-import org.springframework.http.ResponseEntity;
+import com.dualchat.dualchat.dtos.AuthDto;
 
 import java.util.Map;
 
 public interface AuthService {
 
-   User signUp(UserDto user);
+   User signUp(AuthDto user);
 
-   Map authenticate(UserDto userDto) throws Exception;
+   Map authenticate(AuthDto authDto) throws Exception;
 }

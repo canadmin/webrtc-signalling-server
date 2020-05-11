@@ -1,14 +1,20 @@
 package com.dualchat.dualchat.dtos;
 
+import com.dualchat.dualchat.domain.Friend;
+import com.dualchat.dualchat.domain.Request;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
-@NoArgsConstructor
 public class UserDto {
 
-    private String username;
+    private String userId;
 
-    private String password;
+    private String username;
+    private List<Friend> friends;
+    private List<Request> requests;
+
 
 }

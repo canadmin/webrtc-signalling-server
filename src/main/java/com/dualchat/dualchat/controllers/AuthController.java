@@ -1,5 +1,6 @@
 package com.dualchat.dualchat.controllers;
 
+import com.dualchat.dualchat.dtos.UserDto;
 import com.dualchat.dualchat.security.TokenManager;
 import com.dualchat.dualchat.domain.User;
 import com.dualchat.dualchat.dtos.AuthDto;
@@ -8,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 public class AuthController {
@@ -34,4 +33,5 @@ public class AuthController {
     public ResponseEntity<User> signUp(@RequestBody AuthDto user) {
         return new ResponseEntity<User>(authService.signUp(user), HttpStatus.OK);
     }
+
 }

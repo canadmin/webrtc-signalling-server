@@ -36,8 +36,9 @@ public class SocialServiceImpl implements SocialService {
     public void sendFriendRequest(String senderId,String receiverId) {
 
         Optional<User> receiverUserOpt = userRepository.findById(receiverId);
+        User senderUser = userRepository.getOne(senderId);
         List<Request> requests= receiverUserOpt.get().getRequests();
-        requests.add(Request.builder().user(receiverUserOpt.get()).senderId(senderId).build());
+        requests.add(Request.builder().user(receiverUserOpt.get()).senderUserName(senderUser.getUsername()).senderId(senderId).build());
         receiverUserOpt.get().setRequests(requests);
         userRepository.save(receiverUserOpt.get());
     }
@@ -48,7 +49,7 @@ public class SocialServiceImpl implements SocialService {
     }
 
     @Override
-    public UserDto acceptFriendRequest(String myId, String senderId) {
+    public UserDto acceptFriendRequest(String myId, String senderId,int reqId) {
         Optional<User> answeringUser = userRepository.findById(myId);
         Optional<User> waitingUser = userRepository.findById(senderId);
 
@@ -63,7 +64,7 @@ public class SocialServiceImpl implements SocialService {
 
         userRepository.save(answeringUser.get());
         userRepository.save(waitingUser.get());
-
+        requestRepository.deleteById(reqId);
         return modelMapper.map(answeringUser.get(),UserDto.class);
     }
 }

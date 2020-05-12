@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -27,7 +28,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         /*
          * "Bearer 123asd123
+         *
          * */
+        Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+
+        if (headerNames != null) {
+            while (headerNames.hasMoreElements()) {
+                System.out.println("Header: " + httpServletRequest.getHeader(headerNames.nextElement()));
+            }
+        }
         System.out.println(httpServletRequest.getHeaderNames());
         final String authHeader = httpServletRequest.getHeader("Authorization");
         String username = null;

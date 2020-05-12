@@ -31,6 +31,7 @@ public class User {
     @JsonIgnore
     private List<Friend> friends = new ArrayList<>();
 
+    @JoinColumn(name = "request_user_id")
     @OneToMany(cascade = {
             CascadeType.ALL
     })

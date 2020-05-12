@@ -17,9 +17,9 @@ public class Request {
     private int requestId;
 
     private String senderId;
-
+    private String senderUserName;
     @OneToOne
-    @JoinColumn(name = "request_receiver_id")
+    @JoinColumn(name = "request_user_id")
     @JsonBackReference
     private User user;
 

@@ -55,6 +55,12 @@ public class AuthServiceImpl implements AuthService {
         authenticateMap.put("User",modelMapper.map(user, UserDto.class));
         return authenticateMap;
     }
+
+    @Override
+    public UserDto getUserInfo(String userId) {
+        return modelMapper.map(userRepository.getOne(userId),UserDto.class);
+    }
+
     private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));

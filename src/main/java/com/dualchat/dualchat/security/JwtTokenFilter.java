@@ -28,6 +28,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         /*
          * "Bearer 123asd123
          * */
+        System.out.println(httpServletRequest.getHeaderNames());
         final String authHeader = httpServletRequest.getHeader("Authorization");
         String username = null;
         String token = null;

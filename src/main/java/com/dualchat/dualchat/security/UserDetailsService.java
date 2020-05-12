@@ -15,7 +15,6 @@ import java.util.Map;
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    private Map<String,String> users = new HashMap<>();
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -23,10 +22,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Autowired
     private UserRepository userRepository;
 
-    @PostConstruct
-    public void init(){
-        users.put("can",bCryptPasswordEncoder.encode("123"));
-    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.dualchat.dualchat.domain.User user = new com.dualchat.dualchat.domain.User();

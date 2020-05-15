@@ -11,4 +11,6 @@ public class AuthDto {
 
     private String password;
 
+    private String fullName;
+
 }

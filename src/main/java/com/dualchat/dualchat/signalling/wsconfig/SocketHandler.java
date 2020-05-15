@@ -27,9 +27,15 @@ public class SocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         LOG.debug("handleTextMessage : {}", message.getPayload());
         SignalMessage signalMessage = objectMapper.readValue(message.getPayload(), SignalMessage.class);
-
-        if (LOGIN_TYPE.equalsIgnoreCase(signalMessage.getEvent())) {
+            if(signalMessage.getEvent().equalsIgnoreCase("login")){
+                String username = (String) signalMessage.getData();
+                if(username.equalsIgnoreCase("")){
+                    return;
+                }
+            }
+           if (LOGIN_TYPE.equalsIgnoreCase(signalMessage.getEvent())) {
             String username = (String) signalMessage.getData();
+
 
             WebSocketSession client = clients.get(username);
 
@@ -41,7 +47,6 @@ public class SocketHandler extends TextWebSocketHandler {
                 out.setEvent("call");
                 out.setDest(clientIds.get(session.getId()));
                 out.setData(signalMessage.getData());
-
                 String strJsonMSG = objectMapper.writeValueAsString(out);
             } else {
                 LOG.debug("Login {} : KO", username);

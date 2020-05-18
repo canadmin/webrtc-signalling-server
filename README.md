@@ -12,7 +12,7 @@ git clone https://github.com/canadmin/webrtc-signalling-server.git
 cd dual-chat
 mvn spring-boot:run
 ```
-**to view the api document** :
+**to view the api documentation** :
         
         http://localhost:8081/swagger-ui.html
 

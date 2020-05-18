@@ -22,3 +22,9 @@ mvn spring-boot:run
         docker run -d -p 8081:8081 canadmin/dualchat:first
 
 
+**after the signaling server is ready**
+
+[go to  client project](https://github.com/canadmin/webrtc-ui)
+
+
+

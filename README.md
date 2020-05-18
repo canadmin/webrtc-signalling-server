@@ -24,7 +24,7 @@ mvn spring-boot:run
 
 **after the signaling server is ready**
 
-[go to  client project](https://github.com/canadmin/webrtc-ui)
+[go to the client project](https://github.com/canadmin/webrtc-ui)
 
 
 

@@ -14,8 +14,4 @@ public interface SocialService {
     List<UserDto> showFriendRequest(String userId);
 
     UserDto acceptFriendRequest(String myId,String senderId,int reqId);
-
-
-
-
 }

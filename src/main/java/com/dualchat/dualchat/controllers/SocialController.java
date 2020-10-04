@@ -1,7 +1,11 @@
 package com.dualchat.dualchat.controllers;
 
+import com.dualchat.dualchat.domain.Room;
+import com.dualchat.dualchat.dtos.AuthDto;
+import com.dualchat.dualchat.dtos.RoomDto;
 import com.dualchat.dualchat.dtos.UserDto;
 import com.dualchat.dualchat.service.AuthService;
+import com.dualchat.dualchat.service.RoomService;
 import com.dualchat.dualchat.service.social.SocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +23,8 @@ public class SocialController {
     private SocialService socialService;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private RoomService roomService;
 
 
     @CrossOrigin
@@ -48,5 +54,11 @@ public class SocialController {
     @GetMapping("/getUserInfo")
     public ResponseEntity<UserDto> getUserInfo(@RequestParam(value = "userId", required = true) String userId) {
         return new ResponseEntity<>(authService.getUserInfo(userId), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PostMapping("/createRoom")
+    public ResponseEntity<Room> createRoom(@RequestBody RoomDto room){
+        return new ResponseEntity<>(roomService.createRoom(room),HttpStatus.OK);
     }
 }

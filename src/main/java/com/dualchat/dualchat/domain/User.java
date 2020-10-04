@@ -39,4 +39,11 @@ public class User {
     })
     @JsonIgnore
     private List<Request> requests = new ArrayList<>();
+
+    @JoinColumn(name = "room_user_id")
+    @OneToMany(cascade = {
+            CascadeType.ALL
+    })
+    @JsonIgnore
+    private List<Room> rooms = new ArrayList<>();
 }

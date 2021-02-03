@@ -19,7 +19,6 @@ public class Request {
 
     private String senderId;
     private String senderUserName;
-    @UniqueElements
     private String uniqueKey;
     @OneToOne
     @JoinColumn(name = "request_user_id")

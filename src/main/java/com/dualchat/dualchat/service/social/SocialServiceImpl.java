@@ -35,8 +35,8 @@ public class SocialServiceImpl implements SocialService {
     @Override
     public void sendFriendRequest(String senderId,String receiverId) {
         Request request = requestRepository.findByUniqueKey(senderId + receiverId);
-        if(requestRepository.findByUniqueKey(senderId + receiverId) != null
-        || requestRepository.findByUniqueKey(receiverId + senderId) !=null){
+        if(requestRepository.findByUniqueKey(senderId + receiverId) == null
+        && requestRepository.findByUniqueKey(receiverId + senderId) == null){
             Optional<User> receiverUserOpt = userRepository.findById(receiverId);
             User senderUser = userRepository.getOne(senderId);
             List<Request> requests= receiverUserOpt.get().getRequests();

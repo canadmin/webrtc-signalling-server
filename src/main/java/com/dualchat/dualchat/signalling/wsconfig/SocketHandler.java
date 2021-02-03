@@ -27,13 +27,13 @@ public class SocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         LOG.debug("handleTextMessage : {}", message.getPayload());
         SignalMessage signalMessage = objectMapper.readValue(message.getPayload(), SignalMessage.class);
-            if(signalMessage.getEvent().equalsIgnoreCase("login")){
-                String username = (String) signalMessage.getData();
-                if(username.equalsIgnoreCase("")){
-                    return;
-                }
+        if (signalMessage.getEvent().equalsIgnoreCase("login")) {
+            String username = (String) signalMessage.getData();
+            if (username.equalsIgnoreCase("")) {
+                return;
             }
-           if (LOGIN_TYPE.equalsIgnoreCase(signalMessage.getEvent())) {
+        }
+        if (LOGIN_TYPE.equalsIgnoreCase(signalMessage.getEvent())) {
             String username = (String) signalMessage.getData();
 
 
@@ -51,22 +51,22 @@ public class SocketHandler extends TextWebSocketHandler {
             } else {
                 LOG.debug("Login {} : KO", username);
             }
-        }else if(signalMessage.getEvent().equalsIgnoreCase("friendRequest")){
-               String destination = signalMessage.getDest(); // hedefi al
-               WebSocketSession destinationSocket = clients.get(destination);
-               String username = (String) signalMessage.getData();
-               SignalMessage out = new SignalMessage();
-               out.setEvent(signalMessage.getEvent());
-               out.setDest(clientIds.get(session.getId()));
-               out.setData(signalMessage.getData());
-               String strJsonMSG = objectMapper.writeValueAsString(out);
-               destinationSocket.sendMessage(new TextMessage(strJsonMSG));
+        } else if (signalMessage.getEvent().equalsIgnoreCase("friendRequest")) {
+            String destination = signalMessage.getDest(); // hedefi al
+            WebSocketSession destinationSocket = clients.get(destination);
+            String username = (String) signalMessage.getData();
+            SignalMessage out = new SignalMessage();
+            out.setEvent(signalMessage.getEvent());
+            out.setDest(clientIds.get(session.getId()));
+            out.setData(signalMessage.getData());
+            String strJsonMSG = objectMapper.writeValueAsString(out);
+            destinationSocket.sendMessage(new TextMessage(strJsonMSG));
 
-           }else { // eğer bi çağrı isteği ise
+        } else { // eğer bi çağrı isteği ise
             String destination = signalMessage.getDest(); // hedefi al
             WebSocketSession destinationSocket = clients.get(destination);
 
-            if(destinationSocket != null && destinationSocket.isOpen()){
+            if (destinationSocket != null && destinationSocket.isOpen()) {
                 SignalMessage out = new SignalMessage();
                 out.setEvent(signalMessage.getEvent());
                 out.setDest(clientIds.get(session.getId()));

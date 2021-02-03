@@ -2,6 +2,7 @@ package com.dualchat.dualchat.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
@@ -18,6 +19,8 @@ public class Request {
 
     private String senderId;
     private String senderUserName;
+    @UniqueElements
+    private String uniqueKey;
     @OneToOne
     @JoinColumn(name = "request_user_id")
     @JsonBackReference

@@ -34,13 +34,17 @@ public class SocialServiceImpl implements SocialService {
 
     @Override
     public void sendFriendRequest(String senderId,String receiverId) {
-
-        Optional<User> receiverUserOpt = userRepository.findById(receiverId);
-        User senderUser = userRepository.getOne(senderId);
-        List<Request> requests= receiverUserOpt.get().getRequests();
-        requests.add(Request.builder().user(receiverUserOpt.get()).senderUserName(senderUser.getUsername()).senderId(senderId).build());
-        receiverUserOpt.get().setRequests(requests);
-        userRepository.save(receiverUserOpt.get());
+        Request request = requestRepository.findByUniqueKey(senderId + receiverId);
+        if(requestRepository.findByUniqueKey(senderId + receiverId) != null
+        || requestRepository.findByUniqueKey(receiverId + senderId) !=null){
+            Optional<User> receiverUserOpt = userRepository.findById(receiverId);
+            User senderUser = userRepository.getOne(senderId);
+            List<Request> requests= receiverUserOpt.get().getRequests();
+            requests.add(Request.builder().user(receiverUserOpt.get()).senderUserName(senderUser.getUsername()).senderId(senderId)
+                    .uniqueKey(senderId+receiverId).build());
+            receiverUserOpt.get().setRequests(requests);
+            userRepository.save(receiverUserOpt.get());
+        }
     }
 
     @Override

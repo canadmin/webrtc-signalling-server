@@ -51,29 +51,15 @@ public class SocketHandler extends TextWebSocketHandler {
             } else {
                 LOG.debug("Login {} : KO", username);
             }
-        } else if (signalMessage.getEvent().equalsIgnoreCase("friendRequest")) {
+        }else { // eğer bi çağrı isteği ise
             String destination = signalMessage.getDest(); // hedefi al
             WebSocketSession destinationSocket = clients.get(destination);
-            String username = (String) signalMessage.getData();
-            SignalMessage out = new SignalMessage();
-            out.setEvent(signalMessage.getEvent());
-            out.setDest(clientIds.get(session.getId()));
-            out.setData(signalMessage.getData());
-            String strJsonMSG = objectMapper.writeValueAsString(out);
-            destinationSocket.sendMessage(new TextMessage(strJsonMSG));
-
-        } else { // eğer bi çağrı isteği ise
-            String destination = signalMessage.getDest(); // hedefi al
-            WebSocketSession destinationSocket = clients.get(destination);
-
             if (destinationSocket != null && destinationSocket.isOpen()) {
                 SignalMessage out = new SignalMessage();
                 out.setEvent(signalMessage.getEvent());
                 out.setDest(clientIds.get(session.getId()));
                 out.setData(signalMessage.getData());
-
                 String strJsonMSG = objectMapper.writeValueAsString(out);
-
                 destinationSocket.sendMessage(new TextMessage(strJsonMSG));
             }
         }
